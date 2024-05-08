@@ -17,7 +17,7 @@ namespace OtelRezervasyon.Formlar.Misafir
     {
         public FrmMisafirKart()
         {
-            //TODO deneme
+            //TODO deneme sadasd
             InitializeComponent();
         }
         DbOtelRezervasyonEntities3 db=new DbOtelRezervasyonEntities3();
