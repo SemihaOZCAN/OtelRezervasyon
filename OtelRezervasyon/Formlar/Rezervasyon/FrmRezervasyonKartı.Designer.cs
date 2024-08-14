@@ -75,6 +75,9 @@
             this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
             this.pictureEdit13 = new DevExpress.XtraEditors.PictureEdit();
             this.textEditToplamTutar = new DevExpress.XtraEditors.TextEdit();
+            this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
+            this.pictureEdit10 = new DevExpress.XtraEditors.PictureEdit();
+            this.textEditOdaNo = new DevExpress.XtraEditors.TextEdit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lookUpEditMisafir.Properties)).BeginInit();
@@ -115,6 +118,8 @@
             this.groupControl7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit13.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEditToplamTutar.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit10.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditOdaNo.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // groupControl1
@@ -629,6 +634,9 @@
             // 
             // groupControl7
             // 
+            this.groupControl7.Controls.Add(this.textEditOdaNo);
+            this.groupControl7.Controls.Add(this.labelControl10);
+            this.groupControl7.Controls.Add(this.pictureEdit10);
             this.groupControl7.Controls.Add(this.labelControl13);
             this.groupControl7.Controls.Add(this.pictureEdit13);
             this.groupControl7.Controls.Add(this.textEditToplamTutar);
@@ -668,8 +676,40 @@
             this.textEditToplamTutar.Location = new System.Drawing.Point(132, 12);
             this.textEditToplamTutar.Margin = new System.Windows.Forms.Padding(4);
             this.textEditToplamTutar.Name = "textEditToplamTutar";
-            this.textEditToplamTutar.Size = new System.Drawing.Size(491, 22);
+            this.textEditToplamTutar.Size = new System.Drawing.Size(143, 22);
             this.textEditToplamTutar.TabIndex = 2;
+            // 
+            // labelControl10
+            // 
+            this.labelControl10.Location = new System.Drawing.Point(336, 18);
+            this.labelControl10.Margin = new System.Windows.Forms.Padding(4);
+            this.labelControl10.Name = "labelControl10";
+            this.labelControl10.Size = new System.Drawing.Size(86, 16);
+            this.labelControl10.TabIndex = 53;
+            this.labelControl10.Text = "Oda Numarası:";
+            this.labelControl10.Click += new System.EventHandler(this.labelControl10_Click);
+            // 
+            // pictureEdit10
+            // 
+            this.pictureEdit10.EditValue = ((object)(resources.GetObject("pictureEdit10.EditValue")));
+            this.pictureEdit10.Location = new System.Drawing.Point(300, 11);
+            this.pictureEdit10.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureEdit10.Name = "pictureEdit10";
+            this.pictureEdit10.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.pictureEdit10.Properties.Appearance.Options.UseBackColor = true;
+            this.pictureEdit10.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.pictureEdit10.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+            this.pictureEdit10.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
+            this.pictureEdit10.Size = new System.Drawing.Size(27, 25);
+            this.pictureEdit10.TabIndex = 52;
+            // 
+            // textEditOdaNo
+            // 
+            this.textEditOdaNo.Location = new System.Drawing.Point(449, 14);
+            this.textEditOdaNo.Margin = new System.Windows.Forms.Padding(4);
+            this.textEditOdaNo.Name = "textEditOdaNo";
+            this.textEditOdaNo.Size = new System.Drawing.Size(175, 22);
+            this.textEditOdaNo.TabIndex = 54;
             // 
             // FrmRezervasyonKartı
             // 
@@ -736,6 +776,8 @@
             this.groupControl7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit13.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEditToplamTutar.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureEdit10.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEditOdaNo.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -788,5 +830,8 @@
         private DevExpress.XtraEditors.LabelControl labelControl13;
         private DevExpress.XtraEditors.PictureEdit pictureEdit13;
         private DevExpress.XtraEditors.TextEdit textEditToplamTutar;
+        private DevExpress.XtraEditors.TextEdit textEditOdaNo;
+        private DevExpress.XtraEditors.LabelControl labelControl10;
+        private DevExpress.XtraEditors.PictureEdit pictureEdit10;
     }
 }

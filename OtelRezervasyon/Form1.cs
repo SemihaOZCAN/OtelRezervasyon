@@ -159,37 +159,9 @@ namespace OtelRezervasyon
 
         private void btnKasaTanimlari_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            bool formControl = false;
-            Formlar.Tanımlamalar.FrmKasa frm = new Formlar.Tanımlamalar.FrmKasa();
-            if (MdiChildren.Length == 0) //MdiChildren boşsa direkt olarak açıyoruz
-            {
-                frm.MdiParent = this;
-                frm.Show();
-            }
-            foreach (var item in MdiChildren) //Eğer MdiChildren boş değilse içerisinde bizim açmak istediğimiz form var mı yok diye kontrol ediyoru
-            {
-                if (item.Text == frm.AccessibilityObject.Name)
-                {
-                    formControl = true;
-                    break;
-                }
-            }
-            if (!formControl) //Eğer formControl değeri false dönerse formu açıyoruz
-            {
-                frm.MdiParent = this;
-                frm.Show();
-            }
-            else
-            {
-                foreach (XtraMdiTabPage page in xtraTabbedMdiManager1.Pages)
-                {
-                    if (page.MdiChild.Text == frm.AccessibilityObject.Name)
-                    {
-                        xtraTabbedMdiManager1.SelectedPage = page;
-                        break;
-                    }
-                }
-            }
+            Formlar.Tanımlamalar.FrmKasa fr = new Formlar.Tanımlamalar.FrmKasa();
+            fr.MdiParent = this;
+            fr.Show();
 
         }
 
@@ -431,7 +403,7 @@ namespace OtelRezervasyon
             }
             if (!formControl) //Eğer formControl değeri false dönerse formu açıyoruz
             {
-                frm.MdiParent = this;
+                
                 frm.Show();
             }
             else
@@ -466,7 +438,7 @@ namespace OtelRezervasyon
             }
             if (!formControl) //Eğer formControl değeri false dönerse formu açıyoruz
             {
-                frm.MdiParent = this;
+                
                 frm.Show();
             }
             else
@@ -751,7 +723,7 @@ namespace OtelRezervasyon
             }
             if (!formControl) //Eğer formControl değeri false dönerse formu açıyoruz
             {
-                frm.MdiParent = this;
+                
                 frm.Show();
             }
             else
@@ -909,7 +881,14 @@ namespace OtelRezervasyon
 
         private void btnAjanda_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            try
+            {
+                System.Diagnostics.Process.Start("outlookcal:");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Takvim uygulaması başlatılırken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnKurlar_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -1024,51 +1003,43 @@ namespace OtelRezervasyon
 
         private void btnExcel_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            System.Diagnostics.Process.Start("excel");
+            try
+            {
+                string excelPath = @"C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"; // Office 2016 için örnek
+                if (!System.IO.File.Exists(excelPath))
+                {
+                    excelPath = @"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"; // 32-bit Office için örnek
+                }
+
+                if (System.IO.File.Exists(excelPath))
+                {
+                    System.Diagnostics.Process.Start(excelPath);
+                }
+                else
+                {
+                    MessageBox.Show("Excel bulunamadı. Lütfen Excel'in yüklü olduğundan emin olun.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Excel başlatılırken bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
 
         private void btnSifreİslem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            bool formControl = false;
-            Formlar.Admin.FrmSifreİslemleri frm = new Formlar.Admin.FrmSifreİslemleri();
-            if (MdiChildren.Length == 0) //MdiChildren boşsa direkt olarak açıyoruz
-            {
-                frm.MdiParent = this;
-                frm.Show();
-            }
-            foreach (var item in MdiChildren) //Eğer MdiChildren boş değilse içerisinde bizim açmak istediğimiz form var mı yok diye kontrol ediyoru
-            {
-                if (item.Text == frm.AccessibilityObject.Name)
-                {
-                    formControl = true;
-                    break;
-                }
-            }
-            if (!formControl) //Eğer formControl değeri false dönerse formu açıyoruz
-            {
-                frm.MdiParent = this;
-                frm.Show();
-            }
-            else
-            {
-                foreach (XtraMdiTabPage page in xtraTabbedMdiManager1.Pages)
-                {
-                    if (page.MdiChild.Text == frm.AccessibilityObject.Name)
-                    {
-                        xtraTabbedMdiManager1.SelectedPage = page;
-                        break;
-                    }
-                }
-            }
+            Formlar.Admin.FrmSifreİslemleri fr = new Formlar.Admin.FrmSifreİslemleri();
+            fr.Show();
         }
 
 
 
         private void btnYetki_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            Formlar.Admin.FrmSifreİslemleri fr = new Formlar.Admin.FrmSifreİslemleri();
+            fr.Show();
         }
 
         private void btnYardım_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -1186,12 +1157,17 @@ namespace OtelRezervasyon
                 }
             }
         }
-
+        public string kullaniciRolu;
         private void Form1_Load(object sender, EventArgs e)
         {
 
+            //this.Text=kullaniciadi.ToString();
+            //ribbonPageTanımlamalar.Visible = false;
+            //if (kullaniciRolu != "B") 
+            //{
+            //    ribbonPageTanımlamalar.Visible = false;
+            //}
 
-            //Thread.Sleep(5000);
             bool formControl = false;
             Formlar.AnaForm.FrmAnaForm frm = new Formlar.AnaForm.FrmAnaForm();
             if (MdiChildren.Length == 0) //MdiChildren boşsa direkt olarak açıyoruz
@@ -1223,6 +1199,50 @@ namespace OtelRezervasyon
                     }
                 }
             }
+        }
+
+        private void btnResepsiyonHareket_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Formlar.Kasa.FrmResepsiyonHareket fr = new Formlar.Kasa.FrmResepsiyonHareket();
+            fr.MdiParent = this;
+            fr.Show();
+        }
+
+        private void btnYeniKasaKarti_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Formlar.Tanımlamalar.FrmKasa fr = new Formlar.Tanımlamalar.FrmKasa();
+            fr.Show();
+        }
+
+        private void btnKasaCikisKarti_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Formlar.Kasa.FrmKasaCikisKarti fr = new Formlar.Kasa.FrmKasaCikisKarti();
+            fr.Show();
+        }
+
+        private void btnKasaCikisHareket_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Formlar.Kasa.FrmKasaCikisHareket fr = new Formlar.Kasa.FrmKasaCikisHareket();
+            fr.MdiParent = this;
+            fr.Show();
+        }
+
+        private void btnRaporSihirbazi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Formlar.Raporlar.FrmRapor fr =new Formlar.Raporlar.FrmRapor();
+            fr.Show();
+        }
+
+        private void btnMarketHareket_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Formlar.Kasa.FrmMarketHareketi fr = new Formlar.Kasa.FrmMarketHareketi();
+            fr.MdiParent = this;
+            fr.Show();
+        }
+
+        private void btnYeniResepsiyonGiris_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
         }
     }
 }

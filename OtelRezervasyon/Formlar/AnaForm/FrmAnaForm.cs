@@ -70,12 +70,6 @@ namespace OtelRezervasyon.Formlar.AnaForm
                 chartControl2.Series["Series 1"].Points.AddPoint(x.DurumAD, double.Parse(x.Sayı.ToString()));
             }
 
-            
-
-
-
-
-
         }
     }
 }

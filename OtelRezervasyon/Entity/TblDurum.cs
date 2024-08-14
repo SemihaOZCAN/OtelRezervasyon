@@ -61,5 +61,7 @@ namespace OtelRezervasyon.Entity
         public virtual ICollection<TblUrun> TblUrun { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TblUrunGrup> TblUrunGrup { get; set; }
+        public virtual TblDurum TblDurum1 { get; set; }
+        public virtual TblDurum TblDurum2 { get; set; }
     }
 }

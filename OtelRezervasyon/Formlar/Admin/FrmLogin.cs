@@ -27,6 +27,7 @@ namespace OtelRezervasyon.Formlar.Admin
             if (kullanici !=null)
             {
                 Form1 frm =new Form1();
+                frm.kullaniciRolu = kullanici.Rol;
                 frm.Show();
                 this.Hide();
             }

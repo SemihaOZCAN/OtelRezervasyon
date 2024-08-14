@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XtraReportsLayoutSerializer SerializerVersion="22.2.3.0" Ref="1" ControlType="DevExpress.XtraReports.UI.XtraReport, DevExpress.XtraReports.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Name="Report1" Margins="100, 100, 100, 272.8333" PageWidth="850" PageHeight="1100" Version="22.2" DataMember="TblMisafir" DataSource="#Ref-0" Font="Arial, 9.75pt">
+  <Bands>
+    <Item1 Ref="2" ControlType="TopMarginBand" Name="TopMargin" />
+    <Item2 Ref="3" ControlType="BottomMarginBand" Name="BottomMargin" HeightF="272.8333">
+      <Controls>
+        <Item1 Ref="4" ControlType="XRPageInfo" Name="pageInfo1" PageInfo="DateTime" SizeF="325,23" LocationFloat="0,0" StyleName="PageInfo" />
+        <Item2 Ref="5" ControlType="XRPageInfo" Name="pageInfo2" TextFormatString="Sayfa {0} / {1}" TextAlignment="TopRight" SizeF="325,23" LocationFloat="325,0" StyleName="PageInfo" />
+      </Controls>
+    </Item2>
+    <Item3 Ref="6" ControlType="ReportHeaderBand" Name="ReportHeader">
+      <Controls>
+        <Item1 Ref="7" ControlType="XRPictureBox" Name="pictureBox1" ImageUrl="C:\Users\Semiha\Desktop\OtelRezervasyon\OtelLogo.png" Sizing="StretchImage" SizeF="105.833313,90" LocationFloat="534.1667,0" />
+        <Item2 Ref="8" ControlType="XRLabel" Name="label1" Text="Misafir İletişim Raporları" TextAlignment="MiddleCenter" SizeF="410,24.194334" LocationFloat="0,0" StyleName="Title" Font="Arial, 14.25pt, style=Bold" ForeColor="255,192,0,0">
+          <StylePriority Ref="9" UseFont="false" UseForeColor="false" UseTextAlignment="false" />
+        </Item2>
+      </Controls>
+    </Item3>
+    <Item4 Ref="10" ControlType="GroupHeaderBand" Name="GroupHeader1" GroupUnion="WithFirstDetail" HeightF="42.99998">
+      <Controls>
+        <Item1 Ref="11" ControlType="XRLabel" Name="label7" Multiline="true" Text="Mail Adresi" TextAlignment="MiddleLeft" SizeF="181.666718,23" LocationFloat="245.833282,6.00001" Font="Arial, 10pt, style=Bold" Padding="2,2,0,0,100">
+          <StylePriority Ref="12" UseFont="false" UseTextAlignment="false" />
+        </Item1>
+        <Item2 Ref="13" ControlType="XRLabel" Name="label6" Multiline="true" Text="Telefon Numarası" TextAlignment="MiddleLeft" SizeF="140.833313,23" LocationFloat="470,6.00001" Font="Arial, 10pt, style=Bold" Padding="2,2,0,0,100">
+          <StylePriority Ref="14" UseFont="false" UseTextAlignment="false" />
+        </Item2>
+        <Item3 Ref="15" ControlType="XRLabel" Name="label5" Multiline="true" Text="Ad Soyad" TextAlignment="MiddleLeft" SizeF="168.333328,23" LocationFloat="21.666666,6.00001" Font="Arial, 10pt, style=Bold" Padding="2,2,0,0,100">
+          <StylePriority Ref="16" UseFont="false" UseTextAlignment="false" />
+        </Item3>
+      </Controls>
+    </Item4>
+    <Item5 Ref="17" ControlType="DetailBand" Name="Detail" HeightF="70.33335">
+      <Controls>
+        <Item1 Ref="18" ControlType="XRLabel" Name="label4" Multiline="true" Text="label4" SizeF="140.833252,23" LocationFloat="470,0" Padding="2,2,0,0,100">
+          <ExpressionBindings>
+            <Item1 Ref="19" EventName="BeforePrint" PropertyName="Text" Expression="[Telefon]" />
+          </ExpressionBindings>
+        </Item1>
+        <Item2 Ref="20" ControlType="XRLabel" Name="label3" Multiline="true" Text="label3" TextAlignment="MiddleLeft" SizeF="181.666672,23" LocationFloat="245.833328,0" Padding="2,2,0,0,100">
+          <ExpressionBindings>
+            <Item1 Ref="21" EventName="BeforePrint" PropertyName="Text" Expression="[Mail]" />
+          </ExpressionBindings>
+          <StylePriority Ref="22" UseTextAlignment="false" />
+        </Item2>
+        <Item3 Ref="23" ControlType="XRLabel" Name="label2" Multiline="true" Text="label2" TextAlignment="MiddleLeft" SizeF="168.333328,23" LocationFloat="21.666666,2.00002027" Padding="2,2,0,0,100">
+          <ExpressionBindings>
+            <Item1 Ref="24" EventName="BeforePrint" PropertyName="Text" Expression="[AdSoyad]" />
+          </ExpressionBindings>
+          <StylePriority Ref="25" UseTextAlignment="false" />
+        </Item3>
+      </Controls>
+    </Item5>
+  </Bands>
+  <StyleSheet>
+    <Item1 Ref="26" Name="Title" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 14.25pt" ForeColor="255,64,70,80" BackColor="Transparent" BorderColor="Black" Sides="None" StringFormat="Near;Near;0;None;Character;GenericDefault" BorderWidthSerializable="1" />
+    <Item2 Ref="27" Name="DetailCaption1" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt, style=Bold" ForeColor="White" BackColor="255,93,98,110" BorderColor="White" Sides="Left" StringFormat="Near;Center;0;None;Character;GenericDefault" TextAlignment="MiddleLeft" BorderWidthSerializable="2" />
+    <Item3 Ref="28" Name="DetailData1" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt" ForeColor="Black" BorderColor="Transparent" Sides="Left" StringFormat="Near;Center;0;None;Character;GenericDefault" TextAlignment="MiddleLeft" BorderWidthSerializable="2" />
+    <Item4 Ref="29" Name="DetailData3_Odd" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt" ForeColor="Black" BackColor="255,243,245,248" BorderColor="Transparent" Sides="None" StringFormat="Near;Center;0;None;Character;GenericDefault" TextAlignment="MiddleLeft" BorderWidthSerializable="1" />
+    <Item5 Ref="30" Name="PageInfo" BorderStyle="Inset" Padding="6,6,0,0,100" Font="Arial, 8.25pt, style=Bold" ForeColor="255,64,70,80" StringFormat="Near;Near;0;None;Character;GenericDefault" />
+  </StyleSheet>
+  <ComponentStorage>
+    <Item1 Ref="0" ObjectType="DevExpress.DataAccess.Sql.SqlDataSource,DevExpress.DataAccess.v22.2" Name="sqlDataSource1" Base64="PFNxbERhdGFTb3VyY2UgTmFtZT0ic3FsRGF0YVNvdXJjZTEiPjxDb25uZWN0aW9uIE5hbWU9ImxvY2FsaG9zdF9EYk90ZWxSZXplcnZhc3lvbl9Db25uZWN0aW9uIiBGcm9tQXBwQ29uZmlnPSJ0cnVlIiAvPjxRdWVyeSBUeXBlPSJTZWxlY3RRdWVyeSIgTmFtZT0iVGJsTWlzYWZpciI+PFRhYmxlcz48VGFibGUgTmFtZT0iVGJsTWlzYWZpciIgLz48L1RhYmxlcz48Q29sdW1ucz48Q29sdW1uIFRhYmxlPSJUYmxNaXNhZmlyIiBOYW1lPSJNaXNhZmlySUQiIC8+PENvbHVtbiBUYWJsZT0iVGJsTWlzYWZpciIgTmFtZT0iQWRTb3lhZCIgLz48Q29sdW1uIFRhYmxlPSJUYmxNaXNhZmlyIiBOYW1lPSJUQyIgLz48Q29sdW1uIFRhYmxlPSJUYmxNaXNhZmlyIiBOYW1lPSJNYWlsIiAvPjxDb2x1bW4gVGFibGU9IlRibE1pc2FmaXIiIE5hbWU9IlRlbGVmb24iIC8+PENvbHVtbiBUYWJsZT0iVGJsTWlzYWZpciIgTmFtZT0iQWRyZXMiIC8+PENvbHVtbiBUYWJsZT0iVGJsTWlzYWZpciIgTmFtZT0iQWPEsWtsYW1hIiAvPjxDb2x1bW4gVGFibGU9IlRibE1pc2FmaXIiIE5hbWU9IktpbWxpa0ZvdG8xIiAvPjxDb2x1bW4gVGFibGU9IlRibE1pc2FmaXIiIE5hbWU9IktpbWxpa0ZvdG8yIiAvPjxDb2x1bW4gVGFibGU9IlRibE1pc2FmaXIiIE5hbWU9IlVsa2UiIC8+PENvbHVtbiBUYWJsZT0iVGJsTWlzYWZpciIgTmFtZT0ic2VoaXIiIC8+PENvbHVtbiBUYWJsZT0iVGJsTWlzYWZpciIgTmFtZT0iaWxjZSIgLz48Q29sdW1uIFRhYmxlPSJUYmxNaXNhZmlyIiBOYW1lPSJEdXJ1bSIgLz48L0NvbHVtbnM+PC9RdWVyeT48UmVzdWx0U2NoZW1hPjxEYXRhU2V0IE5hbWU9InNxbERhdGFTb3VyY2UxIj48VmlldyBOYW1lPSJUYmxNaXNhZmlyIj48RmllbGQgTmFtZT0iTWlzYWZpcklEIiBUeXBlPSJJbnQzMiIgLz48RmllbGQgTmFtZT0iQWRTb3lhZCIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJUQyIgVHlwZT0iU3RyaW5nIiAvPjxGaWVsZCBOYW1lPSJNYWlsIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlRlbGVmb24iIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWRyZXMiIFR5cGU9IlN0cmluZyIgLz48RmllbGQgTmFtZT0iQWPEsWtsYW1hIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IktpbWxpa0ZvdG8xIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IktpbWxpa0ZvdG8yIiBUeXBlPSJTdHJpbmciIC8+PEZpZWxkIE5hbWU9IlVsa2UiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJzZWhpciIgVHlwZT0iSW50MzIiIC8+PEZpZWxkIE5hbWU9ImlsY2UiIFR5cGU9IkludDMyIiAvPjxGaWVsZCBOYW1lPSJEdXJ1bSIgVHlwZT0iSW50MzIiIC8+PC9WaWV3PjwvRGF0YVNldD48L1Jlc3VsdFNjaGVtYT48Q29ubmVjdGlvbk9wdGlvbnMgQ2xvc2VDb25uZWN0aW9uPSJ0cnVlIiAvPjwvU3FsRGF0YVNvdXJjZT4=" />
+  </ComponentStorage>
+</XtraReportsLayoutSerializer>

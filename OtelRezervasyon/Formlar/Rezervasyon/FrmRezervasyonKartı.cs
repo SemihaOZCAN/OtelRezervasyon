@@ -2,13 +2,8 @@
 using OtelRezervasyon.Entity;
 using OtelRezervasyon.Repositories;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OtelRezervasyon.Formlar.Rezervasyon
@@ -23,6 +18,7 @@ namespace OtelRezervasyon.Formlar.Rezervasyon
         Repository<TblRezervasyon> repo = new Repository<TblRezervasyon>();
         DbOtelRezervasyonEntities3 db = new DbOtelRezervasyonEntities3();
 
+        public object DataTime { get; private set; }
 
         private void FrmRezervasyonKartı_Load(object sender, EventArgs e)
         {
@@ -32,22 +28,22 @@ namespace OtelRezervasyon.Formlar.Rezervasyon
                                                        {
                                                            x.MisafirID,
                                                            x.AdSoyad
-                                                  }).ToList();
+                                                       }).ToList();
 
             //misafir liste2
             lookUpEditKisi2.Properties.DataSource = (from x in db.TblMisafir
-                                                       select new
-                                                       {
-                                                           x.MisafirID,
-                                                           x.AdSoyad
-                                                       }).ToList();
+                                                     select new
+                                                     {
+                                                         x.MisafirID,
+                                                         x.AdSoyad
+                                                     }).ToList();
             //misafir liste3
             lookUpEditKisi3.Properties.DataSource = (from x in db.TblMisafir
-                                                       select new
-                                                       {
-                                                           x.MisafirID,
-                                                           x.AdSoyad
-                                                       }).ToList();
+                                                     select new
+                                                     {
+                                                         x.MisafirID,
+                                                         x.AdSoyad
+                                                     }).ToList();
             //misafir liste3
             lookUpEditKisi4.Properties.DataSource = (from x in db.TblMisafir
                                                      select new
@@ -63,7 +59,7 @@ namespace OtelRezervasyon.Formlar.Rezervasyon
                                                        x.OdaID,
                                                        x.OdaNo,
                                                        x.TblDurum.DurumAD
-                                                   }).Where(y=>y.DurumAD=="Aktif").ToList();
+                                                   }).Where(y => y.DurumAD == "Aktif").ToList();
 
             //Durum Liste
             lookUpEditDurum.Properties.DataSource = (from x in db.TblDurum
@@ -81,16 +77,17 @@ namespace OtelRezervasyon.Formlar.Rezervasyon
                 var rezervasyon = repo.Find(x => x.RezervasyonID == id);
                 lookUpEditMisafir.EditValue = rezervasyon.Misafir;
                 lookUpEditKisi2.EditValue = rezervasyon.Kisi1;
-                lookUpEditKisi3.EditValue=rezervasyon.Kisi2;
+                lookUpEditKisi3.EditValue = rezervasyon.Kisi2;
                 lookUpEditKisi4.EditValue = rezervasyon.Kisi3;
                 dateEditGirisTarih.EditValue = rezervasyon.GirişTarih.ToString();
                 dateEditÇıkısTarih.EditValue = rezervasyon.CikisTarih.ToString();
                 numericUpDown1.Value = decimal.Parse(rezervasyon.Kisi.ToString());
                 lookUpEditOda.EditValue = rezervasyon.Oda;
-                textEditTelefon.Text = rezervasyon.Telefon;    
+                textEditTelefon.Text = rezervasyon.Telefon;
                 lookUpEditDurum.EditValue = rezervasyon.Durum;
                 memoEditAciklama.EditValue = rezervasyon.Aciklama;
                 textEditToplamTutar.Text = rezervasyon.ToplamTutar.ToString();
+                textEditOdaNo.Text = rezervasyon.TblOda.OdaNo;
             }
         }
         //kaydetme işlemi
@@ -98,22 +95,22 @@ namespace OtelRezervasyon.Formlar.Rezervasyon
         {
             TblRezervasyon t = new TblRezervasyon();
 
-            if (numericUpDown1.Value==1)
+            if (numericUpDown1.Value == 1)
             {
                 t.Misafir = int.Parse(lookUpEditMisafir.EditValue.ToString());
             }
-            if (numericUpDown1.Value==2)
+            if (numericUpDown1.Value == 2)
             {
                 t.Misafir = int.Parse(lookUpEditMisafir.EditValue.ToString());
                 t.Kisi1 = int.Parse(lookUpEditKisi2.EditValue.ToString());
             }
-            if (numericUpDown1.Value==3)
+            if (numericUpDown1.Value == 3)
             {
                 t.Misafir = int.Parse(lookUpEditMisafir.EditValue.ToString());
                 t.Kisi1 = int.Parse(lookUpEditKisi2.EditValue.ToString());
                 t.Kisi2 = int.Parse(lookUpEditKisi3.EditValue.ToString());
             }
-            if (numericUpDown1.Value==4)
+            if (numericUpDown1.Value == 4)
             {
                 t.Misafir = int.Parse(lookUpEditMisafir.EditValue.ToString());
                 t.Kisi1 = int.Parse(lookUpEditKisi2.EditValue.ToString());
@@ -145,20 +142,34 @@ namespace OtelRezervasyon.Formlar.Rezervasyon
         private void BtnGuncelle_Click(object sender, EventArgs e)
         {
             var rezervasyon = repo.Find(x => x.RezervasyonID == id);
+
             Repository<TblOda> repo2 = new Repository<TblOda>();
+            if (lookUpEditDurum.Text == "Çıkış Yapıldı.")
+            {
+                var odadurum = repo2.Find(x => x.OdaID == rezervasyon.Oda);
+                odadurum.Durum = 3;
+                repo2.TUpdate(odadurum);
+                rezervasyon.KasayaAktar = true;
+                repo.TUpdate(rezervasyon);
 
-            var odadurum=repo2.Find(x=>x.OdaID ==int.Parse(lookUpEditOda.EditValue.ToString()));
-            odadurum.Durum = 3; 
-            repo2.TUpdate(odadurum);
+                //kasaya aktarma işlemi
+                TblKasaHareketi tkasa = new TblKasaHareketi();
+                Repository<TblKasaHareketi> repokasa=new Repository<TblKasaHareketi>();
+                tkasa.Misafir = lookUpEditMisafir.Text;
+                tkasa.Tarih = DateTime.Parse(DateTime.Now.ToShortDateString());
+                tkasa.Tutar = decimal.Parse(textEditToplamTutar.Text);
+                repokasa.TAdd(tkasa);
 
+
+            }
             rezervasyon.Misafir = int.Parse(lookUpEditMisafir.EditValue.ToString());
-            rezervasyon.GirişTarih = DateTime.Parse( dateEditGirisTarih.Text);
+            rezervasyon.GirişTarih = DateTime.Parse(dateEditGirisTarih.Text);
             rezervasyon.CikisTarih = DateTime.Parse(dateEditÇıkısTarih.Text);
-            rezervasyon.Kisi=numericUpDown1.Value.ToString();
-            rezervasyon.Oda=int.Parse(lookUpEditOda.EditValue.ToString());
-            rezervasyon.Telefon=textEditTelefon.Text;
+            rezervasyon.Kisi = numericUpDown1.Value.ToString();
+            rezervasyon.Oda = int.Parse(lookUpEditOda.EditValue.ToString());
+            rezervasyon.Telefon = textEditTelefon.Text;
             rezervasyon.Durum = int.Parse(lookUpEditDurum.EditValue.ToString());
-            rezervasyon.ToplamTutar=int.Parse(textEditToplamTutar.Text);
+            rezervasyon.ToplamTutar = decimal.Parse(textEditToplamTutar.Text);
 
             if (numericUpDown1.Value == 1)
             {
@@ -170,28 +181,33 @@ namespace OtelRezervasyon.Formlar.Rezervasyon
                 rezervasyon.Kisi1 = int.Parse(lookUpEditKisi2.EditValue.ToString());
             }
             if (numericUpDown1.Value == 3)
-            { 
+            {
                 rezervasyon.Misafir = int.Parse(lookUpEditMisafir.EditValue.ToString());
                 rezervasyon.Kisi1 = int.Parse(lookUpEditKisi2.EditValue.ToString());
-                rezervasyon.Kisi2 = int.Parse(lookUpEditKisi3.EditValue.ToString());  
+                rezervasyon.Kisi2 = int.Parse(lookUpEditKisi3.EditValue.ToString());
             }
             if (numericUpDown1.Value == 4)
             {
                 rezervasyon.Misafir = int.Parse(lookUpEditMisafir.EditValue.ToString());
                 rezervasyon.Kisi1 = int.Parse(lookUpEditKisi2.EditValue.ToString());
                 rezervasyon.Kisi2 = int.Parse(lookUpEditKisi3.EditValue.ToString());
-                rezervasyon.Kisi3=int.Parse(lookUpEditKisi4.EditValue.ToString());
+                rezervasyon.Kisi3 = int.Parse(lookUpEditKisi4.EditValue.ToString());
             }
-            rezervasyon.Aciklama=memoEditAciklama.Text;
+            rezervasyon.Aciklama = memoEditAciklama.Text;
             repo.TUpdate(rezervasyon);
-           
+
             XtraMessageBox.Show("Rezervasyon Başarılı Bir Şekilde Güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Odanın durumunu değiştirme:
-            
+
 
 
         }
+
+        private void labelControl10_Click(object sender, EventArgs e)
+        {
+
+        }
     }
-}   
+}
 

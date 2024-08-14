@@ -19,7 +19,9 @@ namespace OtelRezervasyon.Entity
         public string HareketTuru { get; set; }
         public Nullable<decimal> Miktar { get; set; }
         public Nullable<System.DateTime> Tarih { get; set; }
-        public string Acıklama { get; set; }
+        public string Aciklama { get; set; }
+        public Nullable<decimal> BirimFiyat { get; set; }
+        public Nullable<decimal> ToplamFiyat { get; set; }
     
         public virtual TblUrun TblUrun { get; set; }
     }

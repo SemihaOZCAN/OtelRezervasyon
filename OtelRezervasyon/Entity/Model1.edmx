@@ -108,10 +108,28 @@
           </Key>
           <Property Name="KasaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KasaADI" Type="nvarchar" MaxLength="50" />
-          <Property Name="Bakiye" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Giren" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Cikan" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Bakiye" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Giren" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cikan" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Durum" Type="int" />
+        </EntityType>
+        <EntityType Name="TblKasaCikisHareketi">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="200" />
+          <Property Name="Tarih" Type="date" />
+          <Property Name="Tutar" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="TblKasaHareketi">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Misafir" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tarih" Type="date" />
+          <Property Name="Tutar" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="TblKur">
           <Key>
@@ -193,6 +211,7 @@
           <Property Name="Aciklama" Type="nvarchar" MaxLength="500" />
           <Property Name="Durum" Type="int" />
           <Property Name="ToplamTutar" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="KasayaAktar" Type="bit" />
         </EntityType>
         <EntityType Name="TblTelefon">
           <Key>
@@ -240,8 +259,15 @@
           <Property Name="HareketTuru" Type="nvarchar" MaxLength="5" />
           <Property Name="Miktar" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Tarih" Type="date" />
-          <Property Name="Acıklama" Type="nvarchar" MaxLength="150" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="200" />
+          <Property Name="BirimFiyat" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ToplamFiyat" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'DbOtelRezervasyon.dbo.test' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="test">
+          <Property Name="MutlakBirim" Type="int" />
+        </EntityType>-->
         <Association Name="FK_ilceler_iller">
           <End Role="iller" Type="Self.iller" Multiplicity="1" />
           <End Role="ilceler" Type="Self.ilceler" Multiplicity="*" />
@@ -275,6 +301,18 @@
             </Principal>
             <Dependent Role="TblDepartman">
               <PropertyRef Name="Durum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblDurum_TblDurum">
+          <End Role="TblDurum" Type="Self.TblDurum" Multiplicity="1" />
+          <End Role="TblDurum1" Type="Self.TblDurum" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TblDurum">
+              <PropertyRef Name="DurumID" />
+            </Principal>
+            <Dependent Role="TblDurum1">
+              <PropertyRef Name="DurumID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -542,7 +580,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="OdaDurum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="DbOtelRezervasyonModelStoreContainer">
           <EntitySet Name="ilceler" EntityType="Self.ilceler" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="iller" EntityType="Self.iller" Schema="dbo" store:Type="Tables" />
@@ -556,6 +625,8 @@
           <EntitySet Name="Tbliletisim" EntityType="Self.Tbliletisim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TbliletisimMesaj" EntityType="Self.TbliletisimMesaj" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblKasa" EntityType="Self.TblKasa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblKasaCikisHareketi" EntityType="Self.TblKasaCikisHareketi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblKasaHareketi" EntityType="Self.TblKasaHareketi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblKur" EntityType="Self.TblKur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblMisafir" EntityType="Self.TblMisafir" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblOda" EntityType="Self.TblOda" Schema="dbo" store:Type="Tables" />
@@ -577,6 +648,10 @@
           <AssociationSet Name="FK_TblDepartman_TblDurum" Association="Self.FK_TblDepartman_TblDurum">
             <End Role="TblDurum" EntitySet="TblDurum" />
             <End Role="TblDepartman" EntitySet="TblDepartman" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblDurum_TblDurum" Association="Self.FK_TblDurum_TblDurum">
+            <End Role="TblDurum" EntitySet="TblDurum" />
+            <End Role="TblDurum1" EntitySet="TblDurum" />
           </AssociationSet>
           <AssociationSet Name="FK_TblGorev_TblDepartman" Association="Self.FK_TblGorev_TblDepartman">
             <End Role="TblDepartman" EntitySet="TblDepartman" />
@@ -700,6 +775,15 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="TblAdmin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kullanici" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Rol" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
         <EntityType Name="TblBirim">
           <Key>
             <PropertyRef Name="BirimID" />
@@ -742,6 +826,8 @@
           <NavigationProperty Name="TblTelefon1" Relationship="Self.FK_TblTelefon_TblDurum1" FromRole="TblDurum" ToRole="TblTelefon" />
           <NavigationProperty Name="TblUrun" Relationship="Self.FK_TblUrun_TblDurum" FromRole="TblDurum" ToRole="TblUrun" />
           <NavigationProperty Name="TblUrunGrup" Relationship="Self.FK_TblUrunGrup_TblDurum" FromRole="TblDurum" ToRole="TblUrunGrup" />
+          <NavigationProperty Name="TblDurum1" Relationship="DbOtelRezervasyonModel.FK_TblDurum_TblDurum" FromRole="TblDurum" ToRole="TblDurum1" />
+          <NavigationProperty Name="TblDurum2" Relationship="DbOtelRezervasyonModel.FK_TblDurum_TblDurum" FromRole="TblDurum1" ToRole="TblDurum" />
         </EntityType>
         <EntityType Name="TblGorev">
           <Key>
@@ -776,17 +862,45 @@
           <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Adres" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="TbliletisimMesaj">
+          <Key>
+            <PropertyRef Name="MesajID" />
+          </Key>
+          <Property Name="MesajID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Gonderen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Konu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Mesaj" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="TblKasa">
           <Key>
             <PropertyRef Name="KasaID" />
           </Key>
           <Property Name="KasaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="KasaADI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Bakiye" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Giren" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Cikan" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Bakiye" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Giren" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cikan" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Durum" Type="Int32" />
           <NavigationProperty Name="TblDurum" Relationship="Self.FK_TblKasa_TblDurum" FromRole="TblKasa" ToRole="TblDurum" />
+        </EntityType>
+        <EntityType Name="TblKasaCikisHareketi">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Aciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="Tutar" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="TblKasaHareketi">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Misafir" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tarih" Type="DateTime" Precision="0" />
+          <Property Name="Tutar" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="TblKur">
           <Key>
@@ -871,16 +985,17 @@
           <Property Name="Kisi" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Oda" Type="Int32" />
           <Property Name="RezervasyonAdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Aciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Durum" Type="Int32" />
-          <NavigationProperty Name="TblDurum" Relationship="Self.FK_TblRezervasyon_TblDurum" FromRole="TblRezervasyon" ToRole="TblDurum" />
-          <NavigationProperty Name="TblMisafir" Relationship="Self.FK_TblRezervasyon_TblMisafir" FromRole="TblRezervasyon" ToRole="TblMisafir" />
-          <NavigationProperty Name="TblOda" Relationship="Self.FK_TblRezervasyon_TblOda" FromRole="TblRezervasyon" ToRole="TblOda" />
           <Property Name="Kisi1" Type="Int32" />
           <Property Name="Kisi2" Type="Int32" />
           <Property Name="Kisi3" Type="Int32" />
+          <Property Name="Telefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Aciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Durum" Type="Int32" />
           <Property Name="ToplamTutar" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="KasayaAktar" Type="Boolean" />
+          <NavigationProperty Name="TblDurum" Relationship="Self.FK_TblRezervasyon_TblDurum" FromRole="TblRezervasyon" ToRole="TblDurum" />
+          <NavigationProperty Name="TblMisafir" Relationship="Self.FK_TblRezervasyon_TblMisafir" FromRole="TblRezervasyon" ToRole="TblMisafir" />
+          <NavigationProperty Name="TblOda" Relationship="Self.FK_TblRezervasyon_TblOda" FromRole="TblRezervasyon" ToRole="TblOda" />
         </EntityType>
         <EntityType Name="TblTelefon">
           <Key>
@@ -936,7 +1051,9 @@
           <Property Name="HareketTuru" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="Miktar" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Tarih" Type="DateTime" Precision="0" />
-          <Property Name="Acıklama" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Aciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BirimFiyat" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ToplamFiyat" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="TblUrun" Relationship="Self.FK_TblUrunHareket_TblUrun" FromRole="TblUrunHareket" ToRole="TblUrun" />
         </EntityType>
         <Association Name="FK_ilceler_iller">
@@ -1243,13 +1360,17 @@
           <EntitySet Name="ilceler" EntityType="Self.ilceler" />
           <EntitySet Name="iller" EntityType="Self.iller" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TblAdmin" EntityType="Self.TblAdmin" />
           <EntitySet Name="TblBirim" EntityType="Self.TblBirim" />
           <EntitySet Name="TblDepartman" EntityType="Self.TblDepartman" />
           <EntitySet Name="TblDurum" EntityType="Self.TblDurum" />
           <EntitySet Name="TblGorev" EntityType="Self.TblGorev" />
           <EntitySet Name="TblHakkimda" EntityType="Self.TblHakkimda" />
           <EntitySet Name="Tbliletisim" EntityType="Self.Tbliletisim" />
+          <EntitySet Name="TbliletisimMesaj" EntityType="Self.TbliletisimMesaj" />
           <EntitySet Name="TblKasa" EntityType="Self.TblKasa" />
+          <EntitySet Name="TblKasaCikisHareketi" EntityType="Self.TblKasaCikisHareketi" />
+          <EntitySet Name="TblKasaHareketi" EntityType="Self.TblKasaHareketi" />
           <EntitySet Name="TblKur" EntityType="Self.TblKur" />
           <EntitySet Name="TblMisafir" EntityType="Self.TblMisafir" />
           <EntitySet Name="TblOda" EntityType="Self.TblOda" />
@@ -1360,33 +1481,58 @@
             <End Role="TblUrun" EntitySet="TblUrun" />
             <End Role="TblUrunHareket" EntitySet="TblUrunHareket" />
           </AssociationSet>
-          <EntitySet Name="TbliletisimMesaj" EntityType="DbOtelRezervasyonModel.TbliletisimMesaj" />
           <FunctionImport Name="OdaDurum" ReturnType="Collection(DbOtelRezervasyonModel.OdaDurum_Result)" />
-          <EntitySet Name="TblAdmin" EntityType="DbOtelRezervasyonModel.TblAdmin" />
+          <AssociationSet Name="FK_TblDurum_TblDurum" Association="DbOtelRezervasyonModel.FK_TblDurum_TblDurum">
+            <End Role="TblDurum" EntitySet="TblDurum" />
+            <End Role="TblDurum1" EntitySet="TblDurum" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <EntityType Name="TbliletisimMesaj">
-          <Key>
-            <PropertyRef Name="MesajID" />
-          </Key>
-          <Property Name="MesajID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Gonderen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Konu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Mesaj" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-        </EntityType>
         <ComplexType Name="OdaDurum_Result">
           <Property Type="String" Name="DurumAD" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="Sayı" Nullable="true" />
         </ComplexType>
-        <EntityType Name="TblAdmin">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Kullanici" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Sifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Rol" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
+        <Association Name="FK_TblDurum_TblDurum">
+          <End Type="DbOtelRezervasyonModel.TblDurum" Role="TblDurum" Multiplicity="1" />
+          <End Type="DbOtelRezervasyonModel.TblDurum" Role="TblDurum1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TblDurum">
+              <PropertyRef Name="DurumID" />
+            </Principal>
+            <Dependent Role="TblDurum1">
+              <PropertyRef Name="DurumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1418,6 +1564,16 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblAdmin">
+            <EntityTypeMapping TypeName="DbOtelRezervasyonModel.TblAdmin">
+              <MappingFragment StoreEntitySet="TblAdmin">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Kullanici" ColumnName="Kullanici" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1480,6 +1636,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TbliletisimMesaj">
+            <EntityTypeMapping TypeName="DbOtelRezervasyonModel.TbliletisimMesaj">
+              <MappingFragment StoreEntitySet="TbliletisimMesaj">
+                <ScalarProperty Name="MesajID" ColumnName="MesajID" />
+                <ScalarProperty Name="Gonderen" ColumnName="Gonderen" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Konu" ColumnName="Konu" />
+                <ScalarProperty Name="Mesaj" ColumnName="Mesaj" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TblKasa">
             <EntityTypeMapping TypeName="DbOtelRezervasyonModel.TblKasa">
               <MappingFragment StoreEntitySet="TblKasa">
@@ -1489,6 +1656,26 @@
                 <ScalarProperty Name="Giren" ColumnName="Giren" />
                 <ScalarProperty Name="Cikan" ColumnName="Cikan" />
                 <ScalarProperty Name="Durum" ColumnName="Durum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblKasaCikisHareketi">
+            <EntityTypeMapping TypeName="DbOtelRezervasyonModel.TblKasaCikisHareketi">
+              <MappingFragment StoreEntitySet="TblKasaCikisHareketi">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Tutar" ColumnName="Tutar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblKasaHareketi">
+            <EntityTypeMapping TypeName="DbOtelRezervasyonModel.TblKasaHareketi">
+              <MappingFragment StoreEntitySet="TblKasaHareketi">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Misafir" ColumnName="Misafir" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Tutar" ColumnName="Tutar" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1561,10 +1748,6 @@
           <EntitySetMapping Name="TblRezervasyon">
             <EntityTypeMapping TypeName="DbOtelRezervasyonModel.TblRezervasyon">
               <MappingFragment StoreEntitySet="TblRezervasyon">
-                <ScalarProperty Name="ToplamTutar" ColumnName="ToplamTutar" />
-                <ScalarProperty Name="Kisi3" ColumnName="Kisi3" />
-                <ScalarProperty Name="Kisi2" ColumnName="Kisi2" />
-                <ScalarProperty Name="Kisi1" ColumnName="Kisi1" />
                 <ScalarProperty Name="RezervasyonID" ColumnName="RezervasyonID" />
                 <ScalarProperty Name="Misafir" ColumnName="Misafir" />
                 <ScalarProperty Name="GirişTarih" ColumnName="GirişTarih" />
@@ -1572,9 +1755,14 @@
                 <ScalarProperty Name="Kisi" ColumnName="Kisi" />
                 <ScalarProperty Name="Oda" ColumnName="Oda" />
                 <ScalarProperty Name="RezervasyonAdSoyad" ColumnName="RezervasyonAdSoyad" />
+                <ScalarProperty Name="Kisi1" ColumnName="Kisi1" />
+                <ScalarProperty Name="Kisi2" ColumnName="Kisi2" />
+                <ScalarProperty Name="Kisi3" ColumnName="Kisi3" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
                 <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
                 <ScalarProperty Name="Durum" ColumnName="Durum" />
+                <ScalarProperty Name="ToplamTutar" ColumnName="ToplamTutar" />
+                <ScalarProperty Name="KasayaAktar" ColumnName="KasayaAktar" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1627,18 +1815,9 @@
                 <ScalarProperty Name="HareketTuru" ColumnName="HareketTuru" />
                 <ScalarProperty Name="Miktar" ColumnName="Miktar" />
                 <ScalarProperty Name="Tarih" ColumnName="Tarih" />
-                <ScalarProperty Name="Acıklama" ColumnName="Acıklama" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TbliletisimMesaj">
-            <EntityTypeMapping TypeName="DbOtelRezervasyonModel.TbliletisimMesaj">
-              <MappingFragment StoreEntitySet="TbliletisimMesaj">
-                <ScalarProperty Name="Mesaj" ColumnName="Mesaj" />
-                <ScalarProperty Name="Konu" ColumnName="Konu" />
-                <ScalarProperty Name="Mail" ColumnName="Mail" />
-                <ScalarProperty Name="Gonderen" ColumnName="Gonderen" />
-                <ScalarProperty Name="MesajID" ColumnName="MesajID" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="BirimFiyat" ColumnName="BirimFiyat" />
+                <ScalarProperty Name="ToplamFiyat" ColumnName="ToplamFiyat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1650,16 +1829,13 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="TblAdmin">
-            <EntityTypeMapping TypeName="DbOtelRezervasyonModel.TblAdmin">
-              <MappingFragment StoreEntitySet="TblAdmin">
-                <ScalarProperty Name="Rol" ColumnName="Rol" />
-                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
-                <ScalarProperty Name="Kullanici" ColumnName="Kullanici" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="DbOtelRezervasyonModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="DbOtelRezervasyonModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="DbOtelRezervasyonModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="DbOtelRezervasyonModel.Store.sp_helpdiagramdefinition" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="DbOtelRezervasyonModel.Store.sp_helpdiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="DbOtelRezervasyonModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="DbOtelRezervasyonModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

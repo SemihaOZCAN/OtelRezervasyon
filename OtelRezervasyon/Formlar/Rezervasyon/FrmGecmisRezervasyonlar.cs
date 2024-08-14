@@ -23,18 +23,29 @@ namespace OtelRezervasyon.Formlar.Rezervasyon
         // Gecmiş Rezervasyon listeleme işlemi 
         private void FrmGecmisRezervasyonlar_Load(object sender, EventArgs e)
         {
-            gridControl1.DataSource = (from x in db.TblRezervasyon
-                                       select new
-                                       {
-                                           x.RezervasyonID,
-                                           x.TblMisafir.AdSoyad,
-                                           x.GirişTarih,
-                                           x.CikisTarih,
-                                           x.Kisi,
-                                           x.TblOda.OdaNo,
-                                           x.Telefon,
-                                           x.TblDurum.DurumAD
-                                       }).Where(y => y.DurumAD == "Çıkış Yapıldı").ToList();
+            var data = (from x in db.TblRezervasyon
+                        where x.TblDurum.DurumAD == "Çıkış Yapıldı."
+                        select new
+                        {
+                            x.RezervasyonID,
+                            x.TblMisafir.AdSoyad,
+                            x.GirişTarih,
+                            x.CikisTarih,
+                            x.Kisi,
+                            x.TblOda.OdaNo,
+                            x.Telefon,
+                            x.TblDurum.DurumAD
+                        }).ToList();
+
+            if (data.Any())
+            {
+                gridControl1.DataSource = data;
+            }
+            else
+            {
+                MessageBox.Show("Çıkış Yapıldı durumunda rezervasyon bulunamadı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
+
     }
 }
