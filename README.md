@@ -2,7 +2,7 @@
 Ticari otomasyon olan "Otel Rezervasyon Sistemi" projesinin amacı, otel sahipleri veya yöneticileri için değer sağlamaktır. Bu proje, otel yönetimi ve işletme performansını geliştirmek için tasarlanmıştır. Sisteme otel bilgilerini ekleyerek, odaları yöneterek, fiyatları belirleyerek ve mevcut rezervasyonları takip ederek, otel sahipleri ve yöneticileri işletme süreçlerini daha etkin bir şekilde yönetebilirler.
 Bu sistem, otel sahiplerine ve yöneticilerine kullanıcı dostu bir arayüz sunarak, otel yönetimini kolaylaştırmayı ve performansı artırmayı hedefler...   
 
- 
+  
 <p align="center">
   <img src="https://github.com/user-attachments/assets/1c571f7a-a649-4b1f-a0a1-a1e01ac821f9" alt="1" width="375" style="margin-top: 5px;"/>
   <img src="https://github.com/user-attachments/assets/e79a19c2-6567-42a4-b00e-384fe87bff62" alt="2" width="400" style="margin-top: 10px;"/>
