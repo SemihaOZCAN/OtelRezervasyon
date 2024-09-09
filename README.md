@@ -13,7 +13,7 @@ Bu sistem, otel sahiplerine ve yöneticilerine kullanıcı dostu bir arayüz sun
   <img src="https://github.com/user-attachments/assets/4c29b2ff-0368-4ab4-8ed0-8665ae6a6310" alt="7" width="400" style="margin-top: 35px;"/>
   <img src="https://github.com/user-attachments/assets/d4642f0d-8033-403b-9e9a-03e737cda8ca" alt="8" width="400" style="margin-top: 40px;"/>
   <img src="https://github.com/user-attachments/assets/a3bbaa1c-041d-4f93-87f2-c5221ad0f657" alt="9" width="400" style="margin-top: 45px;"/>
-  <img src="https://github.com/user-attachments/assets/1507d626-589c-4f98-9cd2-a9b133a44b6d" alt="10" width="400" style="margin-top: 50px;"/>
+  <img src="https://github.com/user-attachments/assets/1507d626-589c-4f98-9cd2-a9b133a44b6d" alt="10" width="400" style="margin-top: 50px;"/> 
   <img src="https://github.com/user-attachments/assets/32573459-1ffc-40e7-91ec-d6f32fecec9a" alt="11" width="400" style="margin-top: 55px;"/>
   <img src="https://github.com/user-attachments/assets/3a49cfc1-a955-41eb-affd-3aceec2fde5b" alt="12" width="400" style="margin-top: 60px;"/>
   <img src="https://github.com/user-attachments/assets/21860cf1-c6d2-4301-8817-1401627f3f53" alt="13" width="400" style="margin-top: 65px;"/>
