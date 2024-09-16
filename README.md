@@ -1,7 +1,7 @@
 # C# DEVEXPRESS İLE OTEL REZERVASYON SİSTEMİ #
 Ticari otomasyon olan "Otel Rezervasyon Sistemi" projesinin amacı, otel sahipleri veya yöneticileri için değer sağlamaktır. Bu proje, otel yönetimi ve işletme performansını geliştirmek için tasarlanmıştır. Sisteme otel bilgilerini ekleyerek, odaları yöneterek, fiyatları belirleyerek ve mevcut rezervasyonları takip ederek, otel sahipleri ve yöneticileri işletme süreçlerini daha etkin bir şekilde yönetebilirler. 
 Bu sistem, otel sahiplerine ve yöneticilerine kullanıcı dostu bir arayüz sunarak, otel yönetimini kolaylaştırmayı ve performansı artırmayı hedefler...        
-  
+   
   
 <p align="center">
   <img src="https://github.com/user-attachments/assets/1c571f7a-a649-4b1f-a0a1-a1e01ac821f9" alt="1" width="375" style="margin-top: 5px;"/>
